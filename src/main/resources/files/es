@@ -1,0 +1,25 @@
+#!/bin/bash
+es_host="10.188.11.226:9200"
+
+es_index="relation-tags"
+curl -XDELETE 192.168.175.12:9200/relation-tags
+curl -XPUT 192.168.175.12:9200/relation-tags -d '{
+    "settings" : {
+        "index" : {
+            "number_of_shards" : 10,
+            "number_of_replicas" : 2
+        }
+    },
+    "mappings": {
+        "docs": {
+           "_all" : {
+              "enabled" : false
+            },
+            "properties": {
+                "tag":{
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}'
